@@ -1,5 +1,17 @@
 <template>
-  <view class="content">
+  <view class="content" :key="locale">
+    <!-- Add a picker to switch languages -->
+    <picker
+      mode="selector"
+      :range="languageOptions"
+      :value="selectedLanguageIndex"
+      @change="onLanguageChange"
+    >
+      <view class="language-picker">
+        <image :src="selectedFlag" class="flag-icon"></image>
+        <text>{{ selectedLanguageLabel }}</text>
+      </view>
+    </picker>
     <image class="logo" src="/static/logo.png"></image>
     <view class="text-area">
       <text class="title">{{ title }}</text>
@@ -19,23 +31,64 @@
 </template>
 
 <script>
+import { messages } from "../../utils/i18n";
+
 export default {
   data() {
     return {
-      title: "Hello",
-      subtitle: "Welcome to vue uni-app!",
-      navItems: [
-        { label: "Go to About Pages !", path: "/pages/about/index" },
-        { label: "Go to Fetch Data Pages !", path: "/pages/fetch/index" },
-        { label: "Go to Shopping List !", path: "/pages/shopping/index" },
-        { label: "Go to Login Pages !", path: "/pages/login/index" },
+      locale: "en", // default locale
+      selectedLanguageIndex: 0, // Index for the picker, 0 for English, 1 for Chinese
+      languageOptions: [
+        { label: "English", value: "en", flag: "/static/images/flags/usa.png" },
+        { label: "中文", value: "cn", flag: "/static/images/flags/china.png" },
       ],
     };
   },
+  computed: {
+    selectedFlag() {
+      return this.languageOptions[this.selectedLanguageIndex].flag;
+    },
+    selectedLanguageLabel() {
+      return this.languageOptions[this.selectedLanguageIndex].label;
+    },
+    title() {
+      return messages[this.locale].title;
+    },
+    subtitle() {
+      return messages[this.locale].subtitle;
+    },
+    navItems() {
+      return [
+        { label: messages[this.locale].about, path: "/pages/about/index" },
+        { label: messages[this.locale].fetchData, path: "/pages/fetch/index" },
+        {
+          label: messages[this.locale].shoppingList,
+          path: "/pages/shopping/index",
+        },
+        { label: messages[this.locale].login, path: "/pages/login/index" },
+      ];
+    },
+  },
   methods: {
+    onLanguageChange(event) {
+      const chosenIndex = event.detail.value;
+      this.selectedLanguageIndex = chosenIndex;
+      const chosenLanguage = this.languageOptions[chosenIndex].value;
+      this.switchLocale(chosenLanguage);
+    },
     navigateTo(path) {
       uni.navigateTo({ url: path });
     },
+    switchLocale(newLocale) {
+      this.locale = newLocale;
+      uni.setStorageSync("preferredLanguage", this.locale); // Store the preferred language
+      console.log("Locale switched to:", this.locale); // Check if this logs correctly
+    },
+  },
+  onShow() {
+    // Check the preferred language or default to English
+    const preferredLanguage = uni.getStorageSync("preferredLanguage") || "en";
+    this.locale = preferredLanguage;
   },
 };
 </script>
@@ -94,5 +147,16 @@ export default {
 .nav-item:hover {
   text-decoration: underline;
   color: blue;
+}
+
+.language-picker {
+  display: flex;
+  align-items: center;
+}
+
+.flag-icon {
+  width: 24px; /* or the size you prefer */
+  height: 24px; /* or the size you prefer */
+  margin-right: 8px;
 }
 </style>

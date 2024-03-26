@@ -66,15 +66,8 @@ export default {
       this[field] = "";
     },
     onSubmit() {
-      // This is where you would handle the form submission,
-      // for example, by sending a request to a server.
-      // The following is a mock function to represent this.
-      this.login(this.username, this.password);
-    },
-    login(username, password) {
-      // Replace with actual API call
       console.log(
-        `Sending login for user ${username} with password ${password}`
+        `Login attempt with username: ${this.username} and password: ${this.password}`
       );
     },
   },
