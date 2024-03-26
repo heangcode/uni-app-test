@@ -5,14 +5,14 @@
       <text class="title">{{ title }}</text>
       <text class="subtitle">{{ subtitle }}</text>
       <view class="nav-list">
-        <view
+        <ul
           v-for="(item, index) in navItems"
           :key="index"
           @click="navigateTo(item.path)"
           class="nav-item"
         >
-          {{ item.label }}
-        </view>
+          <li>{{ item.label }}</li>
+        </ul>
       </view>
     </view>
   </view>
@@ -27,6 +27,7 @@ export default {
       navItems: [
         { label: "Go to About Pages !", path: "/pages/about/index" },
         { label: "Go to Fetch Data Pages !", path: "/pages/fetch/index" },
+        { label: "Go to Shopping List !", path: "/pages/shopping/index" },
       ],
     };
   },
@@ -80,14 +81,17 @@ export default {
 }
 
 .nav-item {
-  background-color: #007aff;
-  color: white;
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
   cursor: pointer;
   width: 100%;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
+}
+
+.nav-item:hover {
+  text-decoration: underline;
+  color: blue;
 }
 </style>

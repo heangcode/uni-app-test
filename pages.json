@@ -17,6 +17,12 @@
       "style": {
         "navigationBarTitleText": "About"
       }
+    },
+    {
+      "path": "pages/shopping/index",
+      "style": {
+        "navigationBarTitleText": "Shopping List"
+      }
     }
   ],
   "globalStyle": {
