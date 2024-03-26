@@ -28,6 +28,7 @@ export default {
         { label: "Go to About Pages !", path: "/pages/about/index" },
         { label: "Go to Fetch Data Pages !", path: "/pages/fetch/index" },
         { label: "Go to Shopping List !", path: "/pages/shopping/index" },
+        { label: "Go to Login Pages !", path: "/pages/login/index" },
       ],
     };
   },

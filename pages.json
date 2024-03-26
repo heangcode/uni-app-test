@@ -19,6 +19,13 @@
       }
     },
     {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "Login",
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/shopping/index",
       "style": {
         "navigationBarTitleText": "Shopping List"
